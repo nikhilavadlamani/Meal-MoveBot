@@ -1,0 +1,188 @@
+/* Full page styles */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  overflow: hidden; /* Prevent scrolling */
+}
+
+/* Background Image */
+.background-image {
+  background-image: url('../assets/image1.jpg'); /* Constant background image */
+  background-size: cover; /* Cover the entire area */
+  background-position: center; /* Center the image */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Behind other elements */
+}
+
+/* Image Carousel */
+.image-carousel {
+  flex: 1; /* Take up half the screen */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden; /* Hide overflow */
+}
+
+.carousel-image {
+  width: 33.33%; /* Each image takes 1/3 of the width */
+  height: 100%; /* Full height */
+  object-fit: cover; /* Cover entire area */
+  position: absolute; /* Positioning for animation */
+  opacity: 0; /* Start with transparent images */
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out; /* Smooth fade and move transition */
+
+}
+
+/* Static first image */
+.carousel-image:first-child {
+  opacity: 1; /* Always visible */
+  position: relative; /* Stays static */
+  left: 0;
+}
+
+/* Animate second image */
+.carousel-image:nth-child(2) {
+  transform: translateY(-100%); /* Initial position above */
+}
+
+.carousel-image.active:nth-child(2) {
+  transform: translateY(0); /* Moves down to center */
+  opacity: 1;
+}
+
+/* Animate third image */
+.carousel-image:nth-child(3) {
+  transform: translateY(100%); /* Initial position below */
+}
+
+.carousel-image.active:nth-child(3) {
+  transform: translateY(0); /* Moves up to center */
+  opacity: 1;
+}
+
+/* Animate fourth image */
+.carousel-image:nth-child(4) {
+  transform: translateY(-100%); /* Initial position above */
+}
+
+.carousel-image.active:nth-child(4) {
+  transform: translateY(0); /* Moves down to center */
+  opacity: 1;
+}
+
+/* Quote Overlay */
+.quote-overlay {
+  position: absolute;
+  color: white;
+  font-size: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add shadow for better visibility */
+  z-index: 1; /* Ensure it’s above the background */
+  text-align: center;
+  width: 100%; /* Full width for center alignment */
+  bottom: 5%; /* Position it near the bottom */
+}
+
+/* Login Box Styles */
+.login-box {
+  flex: 0 0 400px; /* Fixed width for the login box */
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  position: absolute; /* Use absolute positioning */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for vertical and horizontal centering */
+  z-index: 1; /* Ensure it’s above the background */
+}
+
+
+.login-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px; /* Reduced margin */
+  text-align: center;
+}
+
+/* Input Styles */
+.login-input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+.login-input:focus {
+  border-color: #2196f3;
+}
+
+/* Button Styles */
+.login-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover {
+  background-color: #1976d2;
+}
+
+/* Register Section Styles */
+.register-section {
+  margin-top: 20px;
+}
+
+/* Error Message Styles */
+.login-error {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Animation */
+@keyframes dropInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes dropInUp {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes dropInRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
