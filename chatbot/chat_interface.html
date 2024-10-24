@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('image.jpeg'); /* Path to the image */
+            background-size: cover;
+        }
+
+        .chat-container {
+            position: relative; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-image: url('mealyoga2.jpeg'); /* Path to the image */
+            background-size: cover; /* Ensures the image covers the entire container */
+            background-position: center; /* Centers the image */
+            background-color: #fff; 
+            width: 100%;
+            max-width: 450px;
+            height: 450px;
+            border: 2px solid #ccc;
+            padding: 10px;
+            margin: 0 auto;
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease-in-out;
+            z-index: 1;
+        }
+
+        .chat-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(223, 217, 217, 0.4); /* Adjust the shading color and opacity */
+            border-radius: 10px;
+            z-index: -1; /* Keeps the overlay behind the content */
+        }
+
+        .chat-box {
+            padding: 5px;
+            
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Allows the chat-box to grow as content increases */
+        }
+
+        .message {
+            margin-bottom: 10px; 
+            padding: 1px; 
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .message p {
+            padding: 4px 6px; 
+            margin: 5px;        
+            border-radius: 5px; 
+            display: inline-block;
+        }
+        .message.bot {
+            text-align: left;
+            background-color: #fff;
+            color: #000;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
+            align-self: flex-start;
+            padding: 10px 10px;
+            word-wrap: break-word;  /* Ensures long words break and wrap */
+            max-width: 90%; /* Ensure the message box doesn't overflow */
+        }
+        
+
+        .message.user {
+            text-align: right;
+            background-color: #ea153f;
+            color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
+            align-self: flex-end;
+        }
+
+        .message p {
+            padding: 5px 8px; /* Tighter padding to wrap closely around the text */
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .message a {
+            color: #007BFF;
+            text-decoration: none;
+            word-wrap: break-word;
+        }
+
+        .message a:hover {
+            text-decoration: underline;
+        }
+
+        .message img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .input-area {
+            display: flex;
+            border-top: 1px solid #f69bdc;
+            padding: 10px;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .input-area button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #ea153f;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .chat-box button {
+            background-color: #cc54b0;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .chat-box button:hover {
+            background-color: #a83759;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type your message..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+
+        // Append messages to the chat box
+        function appendMessage(sender, message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender);
+            messageDiv.innerHTML = `<p>${message.replace(/\n/g, '<br>')}</p>`;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;  // Scroll to the bottom
+        }
+
+        // Send user message to the backend
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value.trim();
+            if (message) {
+                appendMessage('user', message); // Append user message
+                userInput.value = ''; // Clear input field
+
+                // First API call to send user message to backend
+                fetch('http://127.0.0.1:5000/chat', {  
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const botReply = data.response;
+                    appendMessage('bot', botReply); // Append first bot response
+                    addButtonListeners();  // Add listeners for buttons after bot reply is rendered
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            }
+        }
+
+        // Function to handle button-based message
+        function handleButtonClick(buttonMessage) {
+            appendMessage('user', buttonMessage);
+
+            // Send the button selection message to the backend
+            fetch('http://127.0.0.1:5000/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: buttonMessage }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const botReply = data.response;
+                appendMessage('bot', botReply);
+                addButtonListeners();  // Re-add listeners in case new buttons appear
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Function to dynamically add event listeners to buttons in the bot message
+        function addButtonListeners() {
+            const buttons = document.querySelectorAll('.bot button');
+            buttons.forEach(button => {
+                let newButton = button.cloneNode(true);
+                button.replaceWith(newButton);
+                newButton.addEventListener('click', function() {
+                    handleButtonClick(newButton.innerText);
+                });
+            });
+        }
+
+        // Event listener for the Enter key press
+        document.getElementById('userInput').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') { // Check if the Enter key is pressed
+                event.preventDefault(); // Prevents the default form submission behavior
+                sendMessage(); // Call the function to send the message
+            }
+        });
+    </script>
+
+</body>
+</html>
