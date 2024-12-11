@@ -1,0 +1,50 @@
+/* General Styles */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%; /* Using padding instead of margin for better responsiveness */
+    color: rgb(10, 7, 7);
+}
+
+.nav-logo {
+    font-family: 'Outfit', sans-serif;
+    font-size: 42px;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    font-size: 18px;
+    gap: 90px;
+}
+
+/* Hover effect for menu items */
+.nav-menu li {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.nav-menu li:hover {
+    color: #b31d1d; /* A gold color for the hover effect */
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-logo {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        gap: 30px;
+        font-size: 16px;
+    }
+}

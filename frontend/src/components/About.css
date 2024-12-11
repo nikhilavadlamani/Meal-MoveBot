@@ -1,0 +1,24 @@
+.about-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    height: 100vh; /* Full viewport height */
+    text-align: center; /* Center the text */
+    background-color: #f9f9f9; /* Light background color */
+    background-image: url(../assets/image13.jpg);
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #070606; /* Darker color for the header */
+}
+
+p {
+    
+    color: #631010; /* Darker text color for readability */
+    margin: 0 20px; /* Add margin to avoid touching edges on small screens */
+    max-width: 800px; /* Optional: Limit width for readability */
+    line-height: 1.6; /* Improve readability with line spacing */
+}
