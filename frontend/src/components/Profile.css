@@ -1,0 +1,147 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #c5c9c7;
+}
+
+/* Profile Container */
+.profile-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #df9bcb;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* Header Section */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Favorites Section */
+.favorites-box {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.favorites-box h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #444;
+    text-align: center;
+}
+
+.favorites-box ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.favorites-box ul li {
+    background-color: #ffffff;
+    margin: 8px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #555;
+    word-wrap: break-word;
+}
+
+.favorites-box ul li:hover {
+    background-color: #e9f4ff;
+    border-color: #007bff;
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 15px;
+    }
+
+    .button {
+        font-size: 12px;
+        padding: 8px 15px;
+    }
+    .favorite-item {
+        margin: 10px 0;
+        list-style: none;
+    }
+    
+    .favorite-content {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    
+    .favorite-content.expanded {
+        white-space: normal;
+    }
+    
+    .view-more-button {
+        background-color: transparent;
+        color: #007bff;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+    
+    .view-more-button:hover {
+        text-decoration: underline;
+    }
+
+    .delete-button {
+        margin-left: 10px;
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .delete-button:hover {
+        background-color: #e60000;
+    }
+    
+    
+}

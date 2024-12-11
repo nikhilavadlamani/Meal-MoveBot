@@ -1,0 +1,50 @@
+/* Header styling */
+.body{
+  overflow: hidden;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #df9bcb;
+  color: white;
+  padding: 5px 15px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure the header stays on top */
+}
+
+/* Left side welcome message styling */
+.welcome-message {
+  font-size: 25px;
+  font-weight: bold;
+  color: black;
+}
+
+/* Button container styling to place buttons side by side */
+.button-container {
+  display: flex;
+  gap: 10px;  /* Space between the buttons */
+}
+
+/* Button styling */
+.button {
+  background-color: #af4caf;
+  color: white;
+  padding: 5px 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+/* iframe styling */
+iframe {
+  width: 100%;
+  height: calc(100vh - 10px);
+   /* Adjust iframe height to fit below header */
+  overflow: hidden;
+  border: none;
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d2d5d4;
+            background-size: cover; /* Scales the image to cover the entire background */
+            background-repeat: no-repeat; /* Prevents the image from repeating */
+            background-position: center; /* Centers the image */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-size: 16px;
+        }
+        .form-group input {
+            width: 96%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+        .button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .result h3 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .result ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        .result ul li {
+            background-color: #fff;
+            padding: 15px;
+            margin: 5px;
+            border-radius: 8px;
+            text-align: center;
+            width: 120px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+        .result ul li:hover {
+            transform: translateY(-5px);
+        }
+        .result img {
+            max-width: 100%;
+            max-height: 80px;
+            margin-top: 8px;
+            border-radius: 4px;
+        }
+        .result p {
+            text-align: center;
+            color: #666;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Move Bot</h1>
+        <div class="form-group">
+            <label for="body_part">Enter a body part (e.g., shoulders, legs, back):</label>
+            <input type="text" id="body_part" name="body_part" placeholder="Enter a body part">
+        </div>
+        <button class="button" onclick="getAsanas()">Check Yoga Routines</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function getAsanas() {
+            const bodyPart = document.getElementById('body_part').value.trim();
+            if (bodyPart) {
+                fetch('/get_asanas', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ body_part: bodyPart })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.innerHTML = ''; // Clear previous results
+
+                    if (data.asanas) {
+                        let list = `<h3>Asanas for ${bodyPart}:</h3><ul>`;
+                        data.asanas.forEach(asana => {
+                            list += `<li>${asana.name}<br><img src="${asana.image}" alt="${asana.name}"></li>`;
+                        });
+                        list += '</ul>';
+                        resultDiv.innerHTML = list;
+                    } else if (data.message) {
+                        resultDiv.innerHTML = `<p>${data.message}</p>`;
+                    } else {
+                        resultDiv.innerHTML = `<p>Unexpected response format: ${JSON.stringify(data)}</p>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    document.getElementById('result').innerHTML = '<p>Error fetching data. Please try again later.</p>';
+                });
+            } else {
+                alert("Please enter a body part.");
+            }
+        }
+    </script>
+</body>
+</html>
