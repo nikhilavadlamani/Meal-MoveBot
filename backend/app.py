@@ -131,7 +131,7 @@ def handle_plural_ingredient(ingredient):
 
 
 
-# Function to filter meal plans based on cooking time, cuisine, ingredients, and recipe name
+# Function is used to  filter meal plans based on cooking time, cuisine, ingredients, and recipe name
 def get_meal_plan(max_time_in_minutes=None, cuisine=None, ingredients=None, recipe_name=None):
     filtered_recipes = data
 
